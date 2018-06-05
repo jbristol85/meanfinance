@@ -31,9 +31,13 @@ module.exports.getPrice = function(req, res, symbol) {
         var stockData = data['Time Series (Daily)']
         var keys = Object.keys(stockData);
         var price = parseFloat(stockData[keys[0]]['4. close']);
+        var open = parseFloat(stockData[keys[0]]['1. open']);
+        var high = parseFloat(stockData[keys[0]]['2. high']);
+        var low = parseFloat(stockData[keys[0]]['3. low']);
+        var volume = parseFloat(stockData[keys[0]]['5. volume']);
         res
           .status(200)
-          .json({"price" : price});
+          .json({"price" : price, "open": open, "high": high, "low": low, "volume": volume});
       }
     }); 
   }); 
