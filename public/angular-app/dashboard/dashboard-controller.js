@@ -9,6 +9,7 @@ function DashboardController( $http, $window, AuthFactory, jwtHelper, $location)
     
     $http.get('/api/users/'+ username +"/stocks").then(function(response) {
       vm.stocks = response.data;
+      console.log(vm.stocks);
     }).catch(function(error) {
       console.log(error);
     })
