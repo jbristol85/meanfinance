@@ -18,6 +18,9 @@
        <li ng-class="vm.isActiveTab('deposit')" ng-if="vm.isLoggedIn()"><a href="#!/deposit">Deposit Funds</a></li>
      </ul>
      <form ng-if="!vm.isLoggedIn()" class="navbar-form navbar-right" role="login" ng-submit="vm.login()">
+      <div ng-if="vm.error" class="form-group alert alert-danger" role="alert">
+        {{ vm.error }}
+      </div>
       <div class="form-group" ng-class="{'has-error': vm.error}">
         <input type="text" class="form-control input-sm" placeholder="Username" ng-model="vm.username" autocapitalize="none">
       </div>

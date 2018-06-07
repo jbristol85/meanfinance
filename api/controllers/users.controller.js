@@ -32,10 +32,11 @@ module.exports.login = function(req, res) {
     .findOne({username: username})
     .exec(function(err, user) {
       if (err) {
+        console.log(err);
         res
           .status(400)
           .json(err);
-      } else {
+      } else if(user){
         if (bcrypt.compareSync(password, user.password)) {
           console.log("user found");
           var token = jwt.sign({ username: user.username }, "cdfinance", {expiresIn: 3600});
@@ -47,6 +48,11 @@ module.exports.login = function(req, res) {
             .status(401)
             .json("username or password incorrect");
         }
+      } else {
+        console.log("User not found");
+        res
+          .status(401)
+          .json("No such user found");
       }
     })
 }
@@ -54,9 +60,10 @@ module.exports.login = function(req, res) {
 module.exports.authenticate = function(req, res, next) {
   var headerExists = req.headers.authorization;
   if (headerExists) {
-    var token = req.headers.authorization.split(' ')[1] // -- Authorization bearer xxx
+    var token = req.headers.authorization.split(' ')[1]; // -- Authorization bearer xxx
     jwt.verify(token, "cdfinance", function(err, decoded) {
       if (err) {
+        console.log(err);
         res
           .status(401)
           .json("Unauthorized");
@@ -64,7 +71,7 @@ module.exports.authenticate = function(req, res, next) {
         req.user = decoded.username;
         next();
       }
-    })
+    });
   } else {
     res.status(403).json("No token provided");
   }
