@@ -31,10 +31,14 @@ module.exports.getPrice = function(req, res, symbol) {
         var stockData = data['Time Series (Daily)']
         var keys = Object.keys(stockData);
         var price = parseFloat(stockData[keys[0]]['4. close']);
+<<<<<<< HEAD
         var open = parseFloat(stockData[keys[0]]['1. open']);
         var high = parseFloat(stockData[keys[0]]['2. high']);
         var low = parseFloat(stockData[keys[0]]['3. low']);
         var volume = parseFloat(stockData[keys[0]]['5. volume']);
+=======
+        console.log("Price for", symbol, "is", price);
+>>>>>>> ng-dashboard-stocks
         res
           .status(200)
           .json({"price" : price, "open": open, "high": high, "low": low, "volume": volume});
@@ -45,8 +49,10 @@ module.exports.getPrice = function(req, res, symbol) {
 
 module.exports.returnPrice = function(symbol) {
   var url = _apiUrl + "&symbol=" + symbol
-  console.log(url);
-  var request = https.get(url, function (response) {
+  // console.log(url);
+  return new Promise(resolve => {
+    var price;
+    var request = https.get(url, function (response) {
     // data is streamed in chunks from the server
     // so we have to handle the "data" event    
     var buffer = "", 
@@ -61,14 +67,18 @@ module.exports.returnPrice = function(symbol) {
       if (err) {
         return err
       } else {
-        // finished transferring data
-        // dump the raw data
-        data = JSON.parse(buffer);
-        // console.log(data);
-        var stockData = data['Time Series (Daily)']
-        var keys = Object.keys(stockData);
-        return parseFloat(stockData[keys[0]]['4. close']);
+          // finished transferring data
+          // dump the raw data
+          data = JSON.parse(buffer);
+          // console.log(data);
+          var stockData = data['Time Series (Daily)'];
+          var keys = Object.keys(stockData);
+          var price = stockData[keys[0]]['4. close'];
+          // console.log(symbol, "is valued at", price);
+          resolve(parseFloat(price));
       }
     }); 
+  });
+  
   }); 
 }

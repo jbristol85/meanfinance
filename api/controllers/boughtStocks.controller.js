@@ -1,7 +1,8 @@
 var mongoose = require('mongoose');
 var Stock = mongoose.model('Stock');
 var User = mongoose.model('User');
-var stockPrice = require('./shared/stockPrice.js')
+var stockPrice = require('./shared/stockPrice.js');
+mongoose.Promise = global.Promise;
 
 module.exports.bStocksGetAll = function(req, res) {
   console.log("hello"); 
@@ -10,7 +11,7 @@ module.exports.bStocksGetAll = function(req, res) {
   
   User
     .findOne({username: username})
-    .exec(function(err, user) {
+    .exec(async function(err, user) {
       var response = {
         status : 200,
         message : user
@@ -35,12 +36,31 @@ module.exports.bStocksGetAll = function(req, res) {
         //found the user. pull down the users stocks as well as the stocks current price
         var stocks = user.stocks;
         var prices = [];
-        stocks.forEach(function(stock) {
-          prices.push(stockPrice.returnPrice(stock._id))
-        });
-        res
-          .status(200)
-          .json({"stocks" : stocks, "prices" : prices})
+        var price;
+        const start = async() =>
+        {
+          console.log("Making a promise");
+          await Promise.all(stocks.map(async function(stock) {
+            try
+            {
+              price = await stockPrice.returnPrice(stock._id);
+              prices.push(price);
+              console.log("Price list (async):", prices);
+              // console.log(price);
+            } catch(e)
+            {
+              console.log(e);
+              throw new Error('Failed');
+            }
+            
+            console.log(stock._id, "is valued at", price);
+          }));
+          console.log("Price list(sync):", prices);
+          res
+            .status(200)
+            .json({"stocks" : stocks, "prices" : prices})
+        }
+        start();
       }
     })
 }
