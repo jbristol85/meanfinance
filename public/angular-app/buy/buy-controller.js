@@ -16,6 +16,17 @@ function BuyController($http, $window, AuthFactory, jwtHelper, $location) {
       }).catch(function(error) {
         console.log(error);
       })
+      
+      // stock price from find-controller.js
+      $http.get("/api/stocks/" + vm.symbol).then(function(response) {
+      console.log("found stock")
+      var stockprice = response.data.price
+      vm.stockprice = stockprice;
+    }).catch(function(error) {
+      if (error) {
+        vm.error = error;
+      }
+    })
     } else {
       $location.path('/');
     }
