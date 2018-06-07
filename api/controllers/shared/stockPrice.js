@@ -1,5 +1,7 @@
+/* global APIKEY */
 var https = require('https');
-var _apiUrl = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&apikey=3KZ8QLDN95EF7RNO&outputsize=compact"
+// var APIKEY = require('./keys.js');
+var _apiUrl = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&apikey="+APIKEY+"&outputsize=compact"
 
 module.exports.getPrice = function(req, res, symbol) {
   
@@ -31,14 +33,11 @@ module.exports.getPrice = function(req, res, symbol) {
         var stockData = data['Time Series (Daily)']
         var keys = Object.keys(stockData);
         var price = parseFloat(stockData[keys[0]]['4. close']);
-<<<<<<< HEAD
         var open = parseFloat(stockData[keys[0]]['1. open']);
         var high = parseFloat(stockData[keys[0]]['2. high']);
         var low = parseFloat(stockData[keys[0]]['3. low']);
         var volume = parseFloat(stockData[keys[0]]['5. volume']);
-=======
         console.log("Price for", symbol, "is", price);
->>>>>>> ng-dashboard-stocks
         res
           .status(200)
           .json({"price" : price, "open": open, "high": high, "low": low, "volume": volume});
