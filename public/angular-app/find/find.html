@@ -5,14 +5,15 @@
 <div ng-if="vm.error" class="alert alert-danger" role="alert">
   {{ vm.error }}
 </div>
-<form ng-hide="vm.message" name="find" ng-submit="vm.find()">
+<form ng-hide="vm.message" name="find" ng-submit="vm.find(); vm.displayDetails = false">
   <div class="form-group">
     <label for="symbol">Symbol</label>
     <input type="text" class="form-control" id="symbol" placeholder="Symbol" ng-model="vm.symbol" autocapitalize="none">
   </div>
   <button type="submit" class="btn btn-success">find</button>
   
-  <div>
+  <div ng-hide="vm.displayDetails">
     <p>{{vm.symbol}} is currently priced at {{vm.stockprice | currency}}</p>
+    <p>Today, {{vm.symbol}} opened at {{vm.stockOpen | currency}}.  The high was {{vm.stockHigh | currency}}, the low was {{vm.stockLow | currency}} and the total volume was ${{vm.stockVolume}}.</p>
   </div>
 </form>
