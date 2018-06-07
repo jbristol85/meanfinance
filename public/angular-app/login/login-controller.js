@@ -2,12 +2,13 @@ angular.module('cdfinance').controller('LoginController', LoginController);
 
 function LoginController($http, $location, $window, AuthFactory, jwtHelper) {
   var vm = this;
+  vm.logginginError = false;
   
   vm.isLoggedIn = function() {
     if (AuthFactory.isLoggedIn) {
       return true;
     } else {
-      return false;
+      return false; 
     }
   };
   
@@ -20,6 +21,7 @@ function LoginController($http, $location, $window, AuthFactory, jwtHelper) {
       
       $http.post('/api/users/login', user).then(function(response) {
         if (response.data.success) {
+          	vm.logginginError = false;
           $window.sessionStorage.token = response.data.token;
           AuthFactory.isLoggedIn = true;
           var token = $window.sessionStorage.token;
@@ -28,7 +30,10 @@ function LoginController($http, $location, $window, AuthFactory, jwtHelper) {
         }
       }).catch(function(error) {
         console.log(error);
+        vm.logginginError = true;
       })
+    } else{
+      vm.logginginError = true;
     }
   }
   

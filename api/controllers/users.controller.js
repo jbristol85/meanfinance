@@ -4,7 +4,7 @@ var bcrypt = require("bcrypt-nodejs");
 var jwt = require('jsonwebtoken');
 
 module.exports.register = function(req, res) {
-  console.log("registering user");
+  console.log("registering user"); 
   var username = req.body.username;
   var password = req.body.password;
   
@@ -32,6 +32,7 @@ module.exports.login = function(req, res) {
     .findOne({username: username})
     .exec(function(err, user) {
       if (err) {
+        console.log("login module: " + password, user.password)
         res
           .status(400)
           .json(err);
@@ -54,7 +55,7 @@ module.exports.login = function(req, res) {
 module.exports.authenticate = function(req, res, next) {
   var headerExists = req.headers.authorization;
   if (headerExists) {
-    var token = req.headers.authorization.split(' ')[1] // -- Authorization bearer xxx
+    var token = req.headers.authorization.split(' ')[1] // -- Authorization bearer 
     jwt.verify(token, "cdfinance", function(err, decoded) {
       if (err) {
         res

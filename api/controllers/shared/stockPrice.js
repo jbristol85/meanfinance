@@ -61,10 +61,16 @@ module.exports.returnPrice = function(symbol) {
         // dump the raw data
         data = JSON.parse(buffer);
         // console.log(data);
-        var stockData = data['Time Series (Daily)']
+        var stockData = data['Time Series (Daily)'];
+          if (stockData === null || stockData === undefined) {
+          return stockData
+        }
         var keys = Object.keys(stockData);
         return parseFloat(stockData[keys[0]]['4. close']);
+        
       }
+      
     }); 
   }); 
+  
 }
