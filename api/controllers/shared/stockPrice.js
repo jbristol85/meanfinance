@@ -31,6 +31,7 @@ module.exports.getPrice = function(req, res, symbol) {
         var stockData = data['Time Series (Daily)']
         var keys = Object.keys(stockData);
         var price = parseFloat(stockData[keys[0]]['4. close']);
+        console.log("Price for", symbol, "is", price);
         res
           .status(200)
           .json({"price" : price});

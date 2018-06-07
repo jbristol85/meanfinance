@@ -11,7 +11,7 @@ module.exports.bStocksGetAll = function(req, res) {
   
   User
     .findOne({username: username})
-    .exec(function(err, user) {
+    .exec(async function(err, user) {
       var response = {
         status : 200,
         message : user
@@ -37,25 +37,30 @@ module.exports.bStocksGetAll = function(req, res) {
         var stocks = user.stocks;
         var prices = [];
         var price;
-        stocks.forEach(async function(stock) {
-          try
-          {
-            price = await stockPrice.returnPrice(stock._id);
-            prices.push(price);
-            console.log("Price list (async):", prices);
-            // console.log(price);
-          } catch(e)
-          {
-            console.log(e);
-            throw new Error('Failed');
-          }
-          
-          console.log(stock._id, "is valued at", price);
-        });
-        console.log("Price list(sync):", prices);
-        res
-          .status(200)
-          .json({"stocks" : stocks, "prices" : prices})
+        const start = async() =>
+        {
+          console.log("Making a promise");
+          await Promise.all(stocks.map(async function(stock) {
+            try
+            {
+              price = await stockPrice.returnPrice(stock._id);
+              prices.push(price);
+              console.log("Price list (async):", prices);
+              // console.log(price);
+            } catch(e)
+            {
+              console.log(e);
+              throw new Error('Failed');
+            }
+            
+            console.log(stock._id, "is valued at", price);
+          }));
+          console.log("Price list(sync):", prices);
+          res
+            .status(200)
+            .json({"stocks" : stocks, "prices" : prices})
+        }
+        start();
       }
     })
 }
