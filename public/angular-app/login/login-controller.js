@@ -2,7 +2,7 @@ angular.module('cdfinance').controller('LoginController', LoginController);
 
 function LoginController($http, $location, $window, AuthFactory, jwtHelper) {
   var vm = this;
-  
+   
   vm.isLoggedIn = function() {
     if (AuthFactory.isLoggedIn) {
       return true;

@@ -1,0 +1,21 @@
+<div class="text-center">
+<br>
+<input ng-model="search" placeholder="filter" class=" centerOnPage centerBlock">
+<br>
+</div>
+<br>
+<table class="centerOnPage">
+        <tr class="text-center">
+                <td><strong>Symbol</strong></td>
+                <td><strong>Company</strong></td>
+        </tr>
+        <tr dir-paginate="stock in vm.stocks  | filter:search | itemsPerPage: 25" >
+                <td class="tdPadding">{{ stock._id }}</td>
+                <td class="tdPadding">{{ stock.name }}</td>
+        </tr>
+</table>
+<br>
+<div class="text-center">
+<dir-pagination-controls ></dir-pagination-controls>
+</div>
+</div>
