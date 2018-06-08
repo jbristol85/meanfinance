@@ -16,7 +16,8 @@
     <p>{{vm.symbol}} is currently priced at {{vm.stockprice | currency}}</p>
     <p>Today, {{vm.symbol}} opened at {{vm.stockOpen | currency}}.  The high was {{vm.stockHigh | currency}}, the low was {{vm.stockLow | currency}} and the total volume was ${{vm.stockVolume}}.</p>
   </div>
-  
+  </form>
+<form ng-hide="vm.message" name="buy" ng-submit="vm.buy(); vm.displayDetails = false">
   <div class="form-group">
     <label for="amount">Amount</label>
     <input type="number" class="form-control" id="amount" placeholder="amount" ng-model="vm.amount">

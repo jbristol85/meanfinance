@@ -9,7 +9,7 @@ function BuyController($http, $window, AuthFactory, jwtHelper, $location) {
       var decodedToken = jwtHelper.decodeToken(token);
       var username = decodedToken.username;
       
-      var data = {"symbol" : vm.symbol, "amount": vm.amount}
+      var data = {"symbol" : vm.symbol.toUpperCase(), "amount": vm.amount}
       
       $http.post('/api/users/'+ username +"/stocks", data).then(function(response) {
         //check the responses
