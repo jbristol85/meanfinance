@@ -19,12 +19,15 @@
   </div>
   </form>
   
+  <form ng-submit="vm.buy()">
   <div class="form-group">
     <label for="amount">Amount</label>
     <input type="number" class="form-control" id="amount" placeholder="amount" ng-model="vm.amount">
   </div>
   <button type="submit" class="btn btn-success">Buy</button>
+  </form>
   </div>
+  
   <div>
     <stock-list></stock-list>
   </div>

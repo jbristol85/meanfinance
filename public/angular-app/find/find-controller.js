@@ -1,6 +1,6 @@
 angular.module('cdfinance').controller("FindController", FindController);
 
-function FindController($http) {
+function FindController($http, $window, AuthFactory, jwtHelper, $location) {
   var vm = this;
   console.log("findController");
   vm.displayDetails = true;
@@ -33,5 +33,23 @@ function FindController($http) {
         vm.error = error;
       }
     })
+  }
+  
+    vm.buy = function() {
+    if ($window.sessionStorage.token && AuthFactory.isLoggedIn) {
+      var token = $window.sessionStorage.token;
+      var decodedToken = jwtHelper.decodeToken(token);
+      var username = decodedToken.username;
+      var symbol = vm.symbol.toUpperCase();
+      var data = {"symbol" : symbol, "amount": vm.amount}
+      
+      $http.post('/api/users/'+ username +"/stocks", data).then(function(response) {
+        //check the responses
+      }).catch(function(error) {
+        console.log(error);
+      })
+    } else {
+      $location.path('/');
+    }
   }
 }
