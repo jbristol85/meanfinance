@@ -10,6 +10,11 @@ function DashboardController( $http, $window, AuthFactory, jwtHelper, $location)
     $http.get('/api/users/'+ username +"/stocks").then(function(response) {
       vm.stocks = response.data;
       console.log(vm.stocks);
+      vm.total = 0;
+      for(var i in vm.stocks.prices)
+      {
+        vm.total += vm.stocks.prices[i] * vm.stocks.stocks[i].amount;
+      }
     }).catch(function(error) {
       console.log(error);
     })
