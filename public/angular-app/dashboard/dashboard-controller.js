@@ -16,7 +16,23 @@ function DashboardController( $http, $window, AuthFactory, jwtHelper, $location)
     $http.get('/api/users/' + username).then(function(response) {
       vm.balance = response.data
     })
-  } else {
+  } 
+  
+ /*   vm.sellAll = function() {
+    if ($window.sessionStorage.token && AuthFactory.isLoggedIn) {
+      var token = $window.sessionStorage.token;
+      var decodedToken = jwtHelper.decodeToken(token);
+      var username = decodedToken.username;
+      
+      var data = {"symbol" : vm.symbol, "amount": vm.amount}
+      
+      $http.post('/api/users/'+ username +"/stocks", data).then(function(response) {
+        //check the responses
+      }).catch(function(error) {
+        console.log(error);
+      }) 
+    } */
+    else {
     $location.path('/');
   }
 }

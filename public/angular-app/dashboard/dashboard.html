@@ -3,6 +3,7 @@
     <tr>
       <th>Symbol</th>
       <th>Stocks</th>
+      <th>Sell</th>
       <th>Total</th>
     </tr>
   </thead>
@@ -10,6 +11,17 @@
     <tr ng-repeat="stock in vm.stocks.stocks" ng-init="counter = 0">
       <td>{{stock._id}}</td>
       <td>{{stock.amount}}</td>
+      <td>
+        <div ng-if="vm.message" class="alert alert-success" role="alert">
+          <p>{{ vm.message }}</p>
+        </div>
+        <div ng-if="vm.error" class="alert alert-danger" role="alert">
+          {{ vm.error }}
+        </div>
+        <form ng-hide="vm.message" name="sellAll" ng-submit="vm.sellAll()">
+          <button type="submit" class="btn btn-success"><center>Sell</center></button>
+        </form>
+      </td>
       <td>{{vm.stocks.prices[$index] | currency}}</td>
     </tr>
     <tr>
