@@ -5,7 +5,7 @@ function FindController($http) {
   console.log("findController");
   vm.displayDetails = true;
   vm.find = function() {
-    var symbol = vm.symbol
+    var symbol = vm.symbol.toUpperCase()
     console.log(symbol)
     
     $http.get("/api/stocks/" + symbol).then(function(response) {

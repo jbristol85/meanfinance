@@ -57,10 +57,10 @@ typings/
 # dotenv environment variables file
 .env
 
-; # Cloud9 IDE
-; # =========
-; .c9/
-; data/
-; mongod
+# Cloud9 IDE
+# =========
+.c9/
+database/
+mongod
 
-
+key.js
