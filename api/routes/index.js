@@ -36,4 +36,8 @@ router
   .route('/users/login')
   .post(usersCtrl.login);
   
+router
+  .route('/stocks')
+  .get(stocksCtrl.stocksGetAll);
+  
 module.exports = router;

@@ -60,7 +60,7 @@ typings/
 # Cloud9 IDE
 # =========
 .c9/
-data/
+database/
 mongod
 
 key.js
