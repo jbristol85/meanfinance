@@ -30,7 +30,7 @@ module.exports.stocksGetPrice = function(req, res) {
 
 module.exports.stocksGetAll = function(req, res){
   	console.log('Get the Stocks');
-  	console.log(req.query);
+  // 	console.log("req.query " + req);
 
   	Stock 
   		.find()

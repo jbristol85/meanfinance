@@ -36,8 +36,8 @@ function config($httpProvider, $routeProvider) {
     })
     .when('/find', {
       templateUrl: 'angular-app/find/find.html',
-      controller: FindController,
-      controllerAs: 'vm',
+      // controller: FindController,
+      // controllerAs: 'vm',
       access: {
         restricted: false
       }
