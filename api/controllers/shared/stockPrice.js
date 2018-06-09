@@ -2,8 +2,8 @@
 
 var https = require('https');
 // var APIKEY = require('/../../keys.js');
-var _apiUrl = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&apikey=PSPWXGERTER5N7MD&outputsize=compact"
-
+var _apiUrl = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&apikey=APIKEY&outputsize=compact"
+// PSPWXGERTER5N7MD
 module.exports.getPrice = function(req, res, symbol) {
   
   var url = _apiUrl + "&symbol=" + symbol
