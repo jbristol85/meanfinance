@@ -14,16 +14,17 @@ function MainController() {
                         q: "nasdaq", 
                         sortBy: "relevancy", 
                         language: 'en', 
+                        pageSize: 10,
                         sources: "business-insider, financial-times, the-new-york-times, associated-press, bloomberg, cnn, google-news, the-washington-post, the-wallstreet-journal, usa-today,abc-news, cbs-news, cnbc, fortune, nbc-news",
                         apiKey: "449576eacc104279a34b9ab1d5c3cc5e"
                     },
                     success: function(response) {
-
+                    console.log(response)
                         if (response.status === "ok") {
                             // console.log("newsapi", response);
                             vm.response = response;
                             vm.articles = response.articles;
-                         
+                        //  console.log("vm.articles " + vm.articles)
                         }
                     }
 
